@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "heroku-postbuild": "webpack -p" 
+    "heroku-postbuild": "webpack " 
   },
   "keywords": [],
   "author": "",
