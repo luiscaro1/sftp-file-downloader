@@ -1,2 +1,2 @@
 web:
-     node bundle.js
+     npm run build && node src/bundle.js
