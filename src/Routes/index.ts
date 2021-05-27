@@ -3,6 +3,8 @@ import Client from "ssh2-sftp-client";
 import fs from "fs";
 import AdmZip from "adm-zip";
 
+const zip = new AdmZip();
+
 // declaring router
 const router = Router();
 
@@ -52,7 +54,7 @@ router.post("/get", async (req, res) => {
     await addFiles(sftp, source, serverDir, files);
 
     const outDir = "./zips" + "/" + source + "-" + Date.now() + ".zip";
-    const zip = new AdmZip();
+
     await zip.addLocalFolder("./" + serverDir);
     await zip.writeZip(outDir);
 
@@ -61,6 +63,8 @@ router.post("/get", async (req, res) => {
     stream.on("end", () => {
       fs.rmdirSync(serverDir, { recursive: true });
       fs.rmdirSync(outDir, { recursive: true });
+
+      stream.close();
     });
     stream.pipe(res);
     // res.download(outDir);
